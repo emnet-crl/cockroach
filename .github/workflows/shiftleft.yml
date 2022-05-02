@@ -26,5 +26,4 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build CockroachDB w/o console
       run: |
-        ./dev doctor --config=dev && --config nolintonbuild \
         ./dev build short --config=dev --config nolintonbuild
