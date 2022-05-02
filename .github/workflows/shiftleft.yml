@@ -12,6 +12,7 @@ on:
     branches:
       - main
       - master
+      - 'emnet/*'
 
 jobs: 
   static-analysis:
