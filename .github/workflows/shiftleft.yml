@@ -25,5 +25,5 @@ jobs:
  
     - name: Build CockroachDB w/o console
       run: |
-        ./dev build short
+        ./dev doctor && ./dev build short
     
