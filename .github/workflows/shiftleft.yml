@@ -49,13 +49,12 @@ jobs:
             ~/.cache/bazel
           key: ${{ runner.os }}-${{ env.cache-name }}
 
-
       - name: Build cockroach binary
         run: |
           bazel build pkg/cmd/cockroach-short
 
       - name: Run scan
         run: |
-          ${GITHUB_WORKSPACE}/sl analyze --app cockroach --go --cpg .
+          ${GITHUB_WORKSPACE}/sl analyze --app cockroach-short --go --cpg pkg/cmd/cockroach-short
         env:
           SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
