@@ -48,10 +48,6 @@ jobs:
           echo "build --config nolintonbuild" >> ${GITHUB_WORKSPACE}/.bazelrc.user && \
           echo "build --config=dev" >> ${GITHUB_WORKSPACE}/.bazelrc.user
 
-      - name: call the doctor
-        run: |
-          ./dev doctor
-
       - name: Build cocckroach binary
         run: |
           ./dev build short
