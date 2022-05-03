@@ -45,7 +45,8 @@ jobs:
       - name: Setup bazel
         run: |
           echo "build --config nolintonbuild" >> ${GITHUB_WORKSPACE}/.bazelrc.user && \
-          echo "build --config=crosslinux" >> ${GITHUB_WORKSPACE}/.bazelrc.user
+          echo "build --config=crosslinux" >> ${GITHUB_WORKSPACE}/.bazelrc.user && \
+          echo "build --remote_cache=http://127.0.0.1:9867" >> ~/.bazelrc
 
       - name: call the doctor
         run: |
@@ -54,3 +55,7 @@ jobs:
       - name: Build cocckroach binary
         run: |
           ./dev build short
+
+      - name: Run scan
+        run: |
+          sl analyze --app cocckroach --go --cpg .
