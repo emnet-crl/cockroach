@@ -21,15 +21,16 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: Bazel cache
-        id: bazel-cache
-        uses: actions/cache@v2
+      # Caches and restores the bazelisk download directory, the bazel build directory.
+      - name: Cache bazel
+        uses: actions/cache@v2.1.4
         env:
-          version: 4.2.1
+          cache-name: bazel-cache
         with:
-          path: | 
+          path: |
+            ~/.cache/bazelisk
             ~/.cache/bazel
-          key: ${{ runner.os }}-{{ env.version }}-bazel-cache
+          key: ${{ runner.os }}-${{ env.cache-name }}
 
       - name: Install bazelisk
         run: |
@@ -45,8 +46,7 @@ jobs:
       - name: Setup bazel
         run: |
           echo "build --config nolintonbuild" >> ${GITHUB_WORKSPACE}/.bazelrc.user && \
-          echo "build --config=crosslinux" >> ${GITHUB_WORKSPACE}/.bazelrc.user && \
-          echo "build --remote_cache=http://127.0.0.1:9867" >> ~/.bazelrc
+          echo "build --config=dev" >> ${GITHUB_WORKSPACE}/.bazelrc.user
 
       - name: call the doctor
         run: |
