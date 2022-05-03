@@ -21,17 +21,6 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      # Caches and restores the bazelisk download directory, the bazel build directory.
-      - name: Cache bazel
-        uses: actions/cache@v2.1.4
-        env:
-          cache-name: bazel-cache
-        with:
-          path: |
-            ~/.cache/bazelisk
-            ~/.cache/bazel
-          key: ${{ runner.os }}-${{ env.cache-name }}
-
       - name: Install bazelisk
         run: |
           curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.1.0/bazelisk-linux-amd64"
@@ -49,6 +38,18 @@ jobs:
           echo "build --config=dev" >> ${GITHUB_WORKSPACE}/.bazelrc.user && \
           echo "build --disk_cache=~/.cache/bazel" >> ${GITHUB_WORKSPACE}/.bazelrc
 
+      # Caches and restores the bazelisk download directory, the bazel build directory.
+      - name: Cache bazel
+        uses: actions/cache@v2.1.4
+        env:
+          cache-name: bazel-cache
+        with:
+          path: |
+            ~/.cache/bazelisk
+            ~/.cache/bazel
+          key: ${{ runner.os }}-${{ env.cache-name }}
+
+
       - name: Build cockroach binary
         run: |
           bazel build pkg/cmd/cockroach-short
@@ -56,3 +57,5 @@ jobs:
       - name: Run scan
         run: |
           ${GITHUB_WORKSPACE}/sl analyze --app cockroach --go --cpg .
+        env:
+          SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
