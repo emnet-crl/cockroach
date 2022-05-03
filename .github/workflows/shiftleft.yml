@@ -55,4 +55,4 @@ jobs:
 
       - name: Run scan
         run: |
-          sl analyze --app cockroach --go --cpg .
+          ${GITHUB_WORKSPACE}/sl analyze --app cockroach --go --cpg .
