@@ -42,6 +42,10 @@ jobs:
         run: |
           curl https://cdn.shiftleft.io/download/sl > ${GITHUB_WORKSPACE}/sl && chmod a+rx ${GITHUB_WORKSPACE}/sl
 
+      - name: call the doctor
+        run: |
+          ./dev doctor
+
       - name: Build cocckroach binary
         run: |
           ./dev build short
