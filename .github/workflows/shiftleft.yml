@@ -49,6 +49,10 @@ jobs:
             ~/.cache/bazel
           key: ${{ runner.os }}-${{ env.cache-name }}
 
+      - name: go mod vendor
+        run: |
+          go mod vendor
+
       - name: Build cockroach binary
         run: |
           bazel build pkg/cmd/cockroach-short
