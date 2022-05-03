@@ -44,8 +44,8 @@ jobs:
 
       - name: Setup bazel
         run: |
-          echo "build --config nolintonbuild" >> ${github.workspace}/.bazelrc.user && \
-          echo "build --config=crosslinux" >> ${github.workspace}/.bazelrc.user
+          echo "build --config nolintonbuild" >> ${GITHUB_WORKSPACE}/.bazelrc.user && \
+          echo "build --config=crosslinux" >> ${GITHUB_WORKSPACE}/.bazelrc.user
 
       - name: call the doctor
         run: |
