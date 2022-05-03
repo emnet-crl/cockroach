@@ -18,12 +18,30 @@ jobs:
   static-analysis:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Download ShiftLeft CLI
-      run: |
-        curl https://cdn.shiftleft.io/download/sl > ${GITHUB_WORKSPACE}/sl && chmod a+rx ${GITHUB_WORKSPACE}/sl
- 
-    - uses: actions/checkout@v2
-    - name: Build CockroachDB w/o console
-      run: |
-        ./dev build --config=dev --config nolintonbuild short
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Bazel cache
+        id: bazel-cache
+        uses: actions/cache@v2
+        env:
+          version: 4.2.1
+        with:
+          path: | 
+            ~/.cache/bazel
+          key: ${{ runner.os }}-{{ env.version }}-bazel-cache
+
+      - name: Install bazelisk
+        run: |
+          curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.1.0/bazelisk-linux-amd64"
+          mkdir -p "${GITHUB_WORKSPACE}/bin/"
+          mv bazelisk-linux-amd64 "${GITHUB_WORKSPACE}/bin/bazel"
+          chmod +x "${GITHUB_WORKSPACE}/bin/bazel"
+
+      - name: Install ShiftLeft CLI
+        run: |
+          curl https://cdn.shiftleft.io/download/sl > ${GITHUB_WORKSPACE}/sl && chmod a+rx ${GITHUB_WORKSPACE}/sl
+
+      - name: Build cocckroach binary
+        run: |
+          ./dev build short
