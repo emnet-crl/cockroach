@@ -49,14 +49,10 @@ jobs:
           echo "build --config=dev" >> ${GITHUB_WORKSPACE}/.bazelrc.user && \
           echo "build --disk_cache=~/.cache/bazel" >> ${GITHUB_WORKSPACE}/.bazelrc
 
-      - name: Run dev doctor
+      - name: Build cockroach binary
         run: |
-          ./dev doctor
-
-      - name: Build cocckroach binary
-        run: |
-          ./dev build short
+          bazel build pkg/cmd/cockroach-short
 
       - name: Run scan
         run: |
-          sl analyze --app cocckroach --go --cpg .
+          sl analyze --app cockroach --go --cpg .
