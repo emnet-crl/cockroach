@@ -1,0 +1,32 @@
+name: GoKart scan
+
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    # We recommend triggering a scan when merging to your default branch as a best practice,
+    # especially if you'd like to compare the results of two scans (e.g., a feature branch against the
+    # default branch)
+    branches:
+      - main
+      - master
+      - 'emnet/*'
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      
+      - name: install go kart
+        run: |
+          curl -LO "https://github.com/praetorian-inc/gokart/releases/download/v0.4.0/gokart_0.4.0_linux_x86_64.tar.gz"
+          tar -xvf gokart_0.4.0_linux_x86_64.tar.gz
+          mv ./gokart "${GITHUB_WORKSPACE}/bin/gokart"
+          chmod +x "${GITHUB_WORKSPACE}/bin/gokart"
+
+      - name: scan
+        run: |
+          "${GITHUB_WORKSPACE}/bin/gokart" pkg/cmd/cockroach-short -o gokart-cockroach-short-test.txt -s
