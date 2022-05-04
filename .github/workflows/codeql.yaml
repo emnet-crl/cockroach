@@ -12,14 +12,26 @@
 #
 name: "CodeQL"
 
+
+# on:
+#   push:
+#     branches: [ master ]
+#   pull_request:
+#     # The branches below must be a subset of the branches above
+#     branches: [ master ]
+#   schedule:
+#     - cron: '45 12 * * 2'
 on:
-  push:
-    branches: [ master ]
   pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ master ]
-  schedule:
-    - cron: '45 12 * * 2'
+  workflow_dispatch:
+  push:
+    # We recommend triggering a scan when merging to your default branch as a best practice,
+    # especially if you'd like to compare the results of two scans (e.g., a feature branch against the
+    # default branch)
+    branches:
+      - main
+      - master
+      - 'emnet/*'
 
 jobs:
   analyze:
@@ -72,4 +84,3 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
-      
