@@ -24,7 +24,7 @@ jobs:
         run: |
           curl -LO "https://github.com/praetorian-inc/gokart/releases/download/v0.4.0/gokart_0.4.0_linux_x86_64.tar.gz"
           tar -xvf gokart_0.4.0_linux_x86_64.tar.gz
-          mv ./gokart "${GITHUB_WORKSPACE}/bin/gokart"
+          mv gokart "${GITHUB_WORKSPACE}/bin/gokart"
           chmod +x "${GITHUB_WORKSPACE}/bin/gokart"
 
       - name: scan
