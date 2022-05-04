@@ -23,6 +23,7 @@ jobs:
       - name: install go kart
         run: |
           curl -LO "https://github.com/praetorian-inc/gokart/releases/download/v0.4.0/gokart_0.4.0_linux_x86_64.tar.gz"
+          mkdir -p "${GITHUB_WORKSPACE}/bin/"
           tar -xvf gokart_0.4.0_linux_x86_64.tar.gz
           mv gokart "${GITHUB_WORKSPACE}/bin/gokart"
           chmod +x "${GITHUB_WORKSPACE}/bin/gokart"
