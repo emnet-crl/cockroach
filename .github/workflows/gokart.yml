@@ -30,4 +30,4 @@ jobs:
 
       - name: scan
         run: |
-          "${GITHUB_WORKSPACE}/bin/gokart" pkg/cmd/cockroach-short -o gokart-cockroach-short-test.txt -s
+          "${GITHUB_WORKSPACE}/bin/gokart" scan pkg/cmd/cockroach-short -o gokart-cockroach-short-test.txt -s
